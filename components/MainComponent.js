@@ -4,6 +4,7 @@ import Directory from './DirectoryComponent'
 import About from './AboutComponent'
 import Contact from './ContactComponent'
 import CampsiteInfo from './CampsiteInfoComponent'
+import Reservation from './ReservationComponent'
 import {
   View,
   Platform,
@@ -25,6 +26,12 @@ import {
   fetchPartners
 } from '../redux/ActionCreators'
 
+const mapDispatchToProps = {
+  fetchCampsites,
+  fetchComments,
+  fetchPromotions,
+  fetchPartners
+}
 
 const DirectoryNavigator = createStackNavigator(
   {
@@ -132,6 +139,31 @@ const ContactNavigator = createStackNavigator(
   }
 )
 
+const ReservationNavigator = createStackNavigator(
+  {
+    Reservation: { screen: Reservation }
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerStyle: {
+        backgroundColor: '#5637dd'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        color: '#fff'
+      },
+      headerLeft: (
+        <Icon
+          name='tree'
+          type='font-awesome'
+          iconStyle={styles.stackIcon}
+          onPress={() => navigation.toggleDrawer()}
+        />
+      )
+    })
+  }
+)
+
 const CustomDrawerContentComponent = props => (
   <ScrollView>
     <SafeAreaView
@@ -169,6 +201,15 @@ const MainNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Icon name='list' type='font-awesome' size={24} color={tintColor} />
+        )
+      }
+    },
+    Reservation: {
+      screen: ReservationNavigator,
+      navigationOptions: {
+        drawerLabel: 'Reserve Campsite',
+        drawerIcon: ({ tintColor }) => (
+          <Icon name='tree' type='font-awesome' size={24} color={tintColor} />
         )
       }
     },
@@ -210,12 +251,11 @@ const MainNavigator = createDrawerNavigator(
 const AppNavigator = createAppContainer(MainNavigator)
 
 class Main extends Component {
-
   componentDidMount() {
-    this.props.fetchCampsites
-    this.props.fetchComments
-    this.props.fetchPromotions
-    this.props.fetchPromotions
+    this.props.fetchCampsites(),
+      this.props.fetchComments(),
+      this.props.fetchPromotions(),
+      this.props.fetchPartners()
   }
 
   render() {
@@ -261,4 +301,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(null, mapDispatchToProps)(Main)
