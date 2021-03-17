@@ -3,6 +3,7 @@ import Home from './HomeComponent'
 import Directory from './DirectoryComponent'
 import About from './AboutComponent'
 import Contact from './ContactComponent'
+import Favorites from './FavoritesComponent'; 
 import CampsiteInfo from './CampsiteInfoComponent'
 import Reservation from './ReservationComponent'
 import {
@@ -139,9 +140,9 @@ const ContactNavigator = createStackNavigator(
   }
 )
 
-const ReservationNavigator = createStackNavigator(
+const FavoritesNavigator = createStackNavigator(
   {
-    Reservation: { screen: Reservation }
+    Favorites: { screen: Favorites }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -154,7 +155,7 @@ const ReservationNavigator = createStackNavigator(
       },
       headerLeft: (
         <Icon
-          name='tree'
+          name='heart'
           type='font-awesome'
           iconStyle={styles.stackIcon}
           onPress={() => navigation.toggleDrawer()}
@@ -204,12 +205,12 @@ const MainNavigator = createDrawerNavigator(
         )
       }
     },
-    Reservation: {
-      screen: ReservationNavigator,
+    Favorites: {
+      screen: FavoritesNavigator,
       navigationOptions: {
-        drawerLabel: 'Reserve Campsite',
+        drawerLabel: 'My Favorites',
         drawerIcon: ({ tintColor }) => (
-          <Icon name='tree' type='font-awesome' size={24} color={tintColor} />
+          <Icon name='heart' type='font-awesome' size={24} color={tintColor} />
         )
       }
     },
